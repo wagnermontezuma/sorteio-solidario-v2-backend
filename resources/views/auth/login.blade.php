@@ -63,7 +63,7 @@
 					</div>
 					<hr />
 					<p class="text-center text-grey-darker mb-0">
-						&copy; Painel Administrativo todos os direitos reservados 2022
+						&copy; Painel Administrativo - Todos os direitos reservados {{ date('Y') }}
 					</p>
 				</form>
 			</div>
