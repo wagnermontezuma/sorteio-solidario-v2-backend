@@ -59,7 +59,7 @@
     "flot": "^0.8.3",
     "fullcalendar": "^3.10.0",
     "gritter": "^1.7.4",
-    "gulp-download-stream": "0.0.19",
+    "gulp-download-stream": "0.0.20",
     "gulp-header": "^2.0.9",
     "gulp-sass-variables": "^1.2.0",
     "intro.js": "^2.9.3",
