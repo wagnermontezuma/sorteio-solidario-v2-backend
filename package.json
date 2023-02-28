@@ -97,7 +97,7 @@
     "summernote": "^0.8.12",
     "sweetalert": "^2.1.2",
     "tag-it": "^2.0.0",
-    "webpack": "^3.10.0",
+    "webpack": "^5.75.0",
     "x-editable-bs4": "^1.5.4"
   }
 }
