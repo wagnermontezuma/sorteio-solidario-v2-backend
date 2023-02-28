@@ -81,7 +81,7 @@
     "lightbox2": "^2.11.1",
     "lity": "^2.3.1",
     "merge-stream": "^2.0.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "morris.js": "^0.5.0",
     "nvd3": "^1.8.6",
     "oclazyload": "^1.1.0",
