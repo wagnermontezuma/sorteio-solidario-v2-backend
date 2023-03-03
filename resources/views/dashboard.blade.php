@@ -1,6 +1,5 @@
 @extends('layouts.default')
 
-
 @section('title', 'Admin')
 
 @push('css')
