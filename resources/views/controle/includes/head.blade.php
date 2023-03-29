@@ -29,5 +29,5 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <link href="{{asset('./../assets/plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" />
 <link href="{{asset('./../assets/plugins/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css')}}" rel="stylesheet" />
-<link href="{{asset('./../assets/plugins/datatables.net-rowreorder-bs4/css/rowreorder.bootstrap4.min.css')}}" rel="stylesheet" />
+<link href="{{asset('./../assets/plugins/datatables.net-rowreorder-bs4/css/rowReorder.bootstrap4.min.css')}}" rel="stylesheet" />
 @stack('css')
