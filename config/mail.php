@@ -44,6 +44,10 @@ return [
             'timeout' => null,
         ],
 
+        'mandrill' => [
+            'transport' => 'mandrill',
+        ],
+
         'ses' => [
             'transport' => 'ses',
         ],
