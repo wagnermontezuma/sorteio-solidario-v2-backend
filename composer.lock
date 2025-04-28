@@ -289,12 +289,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:brediweb/bredi-dashboard.git",
-                "reference": "232a4a77bc05e048262782d58c6c03a3fe23d048"
+                "reference": "d661b65f80e7ec121b6dc336952ab173195e47ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/brediweb/bredi-dashboard/zipball/232a4a77bc05e048262782d58c6c03a3fe23d048",
-                "reference": "232a4a77bc05e048262782d58c6c03a3fe23d048",
+                "url": "https://api.github.com/repos/brediweb/bredi-dashboard/zipball/d661b65f80e7ec121b6dc336952ab173195e47ea",
+                "reference": "d661b65f80e7ec121b6dc336952ab173195e47ea",
                 "shasum": ""
             },
             "require": {
@@ -341,7 +341,7 @@
                 "source": "https://github.com/brediweb/bredi-dashboard/tree/10.x",
                 "issues": "https://github.com/brediweb/bredi-dashboard/issues"
             },
-            "time": "2025-04-28T21:37:08+00:00"
+            "time": "2025-04-28T22:37:16+00:00"
         },
         {
             "name": "brediweb/imagemupload",
