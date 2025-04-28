@@ -194,6 +194,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // ...
+        'Html' => Spatie\Html\Facades\Html::class,
     ])->toArray(),
 
 ];

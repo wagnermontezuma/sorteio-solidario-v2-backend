@@ -39,9 +39,9 @@ $sidebarClass = !empty($sidebarTransparent) ? 'sidebar-transparent' : '';
                 <a href="{{ route('dashboard') }}">
                     <div class="image">
                         @if (isset(Auth::user()->imagem))
-                        <img src="{{ route('imagem.render', "user/p/". Auth::user()->imagem) }}" alt="{{ Auth::user()->name }}" />                           
+                        <img src="{{ route('imagem.render', "user/p/". Auth::user()->imagem) }}" alt="{{ Auth::user()->name }}" />
                         @else
-                        <img src="{{ asset('assets/img/user/user-12.jpg') }}" alt="" />
+                        <img src="{{ asset('assets/img/user/profile.svg') }}" alt="" />
                         @endif
                     </div>
                     <div class="info">
@@ -61,9 +61,8 @@ $sidebarClass = !empty($sidebarTransparent) ? 'sidebar-transparent' : '';
 				</a>
 			</li>
 
-            @can('Visualizar usuário')
-                <li
-                    class="has-sub {{ activeMenu(['controle.usuario', 'controle.roles']) }}">
+            @can('Visualizar Usuário')
+                <li class="has-sub {{ activeMenu(['controle.usuario', 'controle.roles']) }}">
                     <a href="javascript:;">
                         <b class="caret"></b>
                         <i class="fa fa-lock"></i>
@@ -86,7 +85,7 @@ $sidebarClass = !empty($sidebarTransparent) ? 'sidebar-transparent' : '';
                 </li>
             @endcan
 
-            @can('Alterar config')
+            @can('Alterar Config')
                 <li class="has-sub {{ activeMenu('controle.config') }}">
                     <a href="{{ route('controle.config.edit') }}">
                         <i class="fas fa-cog"></i>
@@ -95,8 +94,11 @@ $sidebarClass = !empty($sidebarTransparent) ? 'sidebar-transparent' : '';
                 </li>
             @endcan
 
-            <li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i
-                        class="fa fa-angle-double-left"></i></a></li>
+            <li>
+                <a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify">
+                    <i class="fa fa-angle-double-left"></i>
+                </a>
+            </li>
         </ul>
     </div>
 </div>

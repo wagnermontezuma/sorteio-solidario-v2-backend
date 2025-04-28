@@ -10,7 +10,7 @@
 	$sidebarTwo = (!empty($sidebarTwo)) ? $sidebarTwo : '';
 	$topMenu = (!empty($topMenu)) ? $topMenu : '';
 	$footer = (!empty($footer)) ? $footer : '';
-	
+
 	$pageContainerClass = (!empty($topMenu)) ? 'page-with-top-menu ' : '';
 	$pageContainerClass .= (!empty($sidebarRight)) ? 'page-with-right-sidebar ' : '';
 	$pageContainerClass .= (!empty($sidebarLight)) ? 'page-with-light-sidebar ' : '';
@@ -19,7 +19,7 @@
 	$pageContainerClass .= (!empty($sidebarMinified)) ? 'page-sidebar-minified ' : '';
 	$pageContainerClass .= (!empty($sidebarTwo)) ? 'page-with-two-sidebar ' : '';
 	$pageContainerClass .= (!empty($contentFullHeight)) ? 'page-content-full-height ' : '';
-	
+
 	$contentClass = (!empty($contentFullWidth) || !empty($contentFullHeight)) ? 'content-full-width ' : '';
 	$contentClass .= (!empty($contentInverseMode)) ? 'content-inverse-mode ' : '';
 @endphp
@@ -27,7 +27,7 @@
 @php
 	$headerClass = (!empty($headerInverse)) ? 'navbar-inverse ' : 'navbar-default ';
 	$headerMenu = (!empty($headerMenu)) ? $headerMenu : '';
-	$headerMegaMenu = (!empty($headerMegaMenu)) ? $headerMegaMenu : ''; 
+	$headerMegaMenu = (!empty($headerMegaMenu)) ? $headerMegaMenu : '';
 	$headerTopMenu = (!empty($headerTopMenu)) ? $headerTopMenu : '';
 @endphp
 
@@ -37,7 +37,7 @@
             @if (Laravel\Fortify\Features::canUpdateProfileInformation())
                 @livewire('profile.update-profile-information-form')
 
-                {{-- <x-jet-section-border /> --}}
+                {{-- <x-section-border /> --}}
             @endif
 
             @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::updatePasswords()))
@@ -45,7 +45,7 @@
                     @livewire('profile.update-password-form')
                 </div>
 
-                <x-jet-section-border />
+                <x-section-border />
             @endif
 
             @if (Laravel\Fortify\Features::canManageTwoFactorAuthentication())
@@ -53,7 +53,7 @@
                     @livewire('profile.two-factor-authentication-form')
                 </div>
 
-                <x-jet-section-border />
+                <x-section-border />
             @endif
 
             <div class="mt-10 sm:mt-0">
@@ -61,7 +61,7 @@
             </div>
 
             @if (Laravel\Jetstream\Jetstream::hasAccountDeletionFeatures())
-                <x-jet-section-border />
+                <x-section-border />
 
                 <div class="mt-10 sm:mt-0">
                     @livewire('profile.delete-user-form')

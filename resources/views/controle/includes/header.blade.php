@@ -1,7 +1,7 @@
 @php
 	$headerClass = (!empty($headerInverse)) ? 'navbar-inverse ' : 'navbar-default ';
 	$headerMenu = (!empty($headerMenu)) ? $headerMenu : '';
-	$headerMegaMenu = (!empty($headerMegaMenu)) ? $headerMegaMenu : ''; 
+	$headerMegaMenu = (!empty($headerMegaMenu)) ? $headerMegaMenu : '';
 	$headerTopMenu = (!empty($headerTopMenu)) ? $headerTopMenu : '';
 @endphp
 
@@ -53,9 +53,9 @@
 		@endif
 	</div>
 	<!-- end navbar-header -->
-	
+
 	@includeWhen($headerMegaMenu, 'controle.includes.header-mega-menu')
-	
+
 	<!-- begin header-nav -->
 	<ul class="navbar-nav navbar-right">
 		@isset($headerLanguageBar)
@@ -79,19 +79,19 @@
 				@if (isset(Auth::user()->imagem))
 					<img src="{{ route('imagem.render', "user/p/". Auth::user()->imagem) }}" alt="" />
 				@else
-					<img src="/assets/img/user/user-12.jpg" alt="" />
+					<img src="/assets/img/user/profile.svg" alt="" />
 				@endif
 				<span class="d-none d-md-inline">{{ Auth::user()->name }}</span> <b class="caret"></b>
 			</a>
 			<div class="dropdown-menu dropdown-menu-right">
-				<x-jet-dropdown-link href="{{ route('controle.profile.edit') }}" class="dropdown-item">Perfil</x-jet-dropdown-link>
-				<!-- Authentication -->
+				<a href="{{ route('controle.profile.edit') }}" class="dropdown-item">Perfil</a>
+
 				<form method="POST" action="{{ route('logout') }}">
-				@csrf
-				<x-jet-dropdown-link href="{{ route('logout') }}" onclick="event.preventDefault();this.closest('form').submit();" class="dropdown-item">
-					{{ __('Sair') }}
-						</x-jet-dropdown-link>
-					</form>
+                    @csrf
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault();this.closest('form').submit();" class="dropdown-item">
+                        {{ __('Sair') }}
+					</a>
+				</form>
 			</div>
 		</li>
 		@if($sidebarTwo)
