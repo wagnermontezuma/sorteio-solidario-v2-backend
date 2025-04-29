@@ -24,7 +24,7 @@
 				<div class="panel-body">
 					<div class="btn-group mr-5">
                         <div class="d-flex align-items-center justify-content-center mr-10 mb-3">
-                            <a href="{{ route('controle.usuario.create') }}" class="btn p-l-40 p-r-40 btn-sm label label-green">
+                            <a href="{{ route('controle.usuario.create') }}" class="btn btn-success btn-sm">
                                 Cadastrar
                             </a>
                         </div>

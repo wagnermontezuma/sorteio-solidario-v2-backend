@@ -10,7 +10,7 @@
     <h1 class="page-header">Usuários</h1>
 
     <div class="row">
-        <div style="width: 100vw">
+        <div class="col-md-6">
 
             <div class="panel panel-inverse">
                 <div class="panel-heading">
@@ -29,60 +29,67 @@
 
                 <div class="panel-body">
                     @if (isset($user->id))
-                        {!! Form::model($user, ['route' => ['controle.usuario.update', $user->id]]) !!}
+                        {!! html()->form('POST', route('controle.usuario.update', $user->id))->open() !!}
                     @else
-                        {!! Form::model(null, ['route' => 'controle.usuario.store']) !!}
+                        {!! html()->form('POST', route('controle.usuario.store'))->open() !!}
                     @endif
                     <fieldset>
 
-                        <div class="form-group w-75">
-                            <label for="roles">Grupo Usuário</label>
-                            {!! Form::select('roles', $roles ? [null=>'Selecione'] + $roles : [null=>'Nenhuma grupo cadastrado'] , isset($user) ? $user->roles->first()->name : null, ['class' => 'form-control', 'required']) !!}
+                        <div class="form-group">
+                            {!! html()->label('Grupo Usuário', 'roles') !!}
+                            {!! html()->select('roles', $roles ? [null => 'Selecione'] + $roles : [null => 'Nenhuma grupo cadastrado'], isset($user) ? $user->roles->first()->name : null)
+                                ->class('form-control')
+                                ->required() !!}
                         </div>
 
-                        <div class="form-group w-75">
-                            <label for="name">Nome</label>
-                            {!! Form::text('name', null, ['class' => 'form-control', 'required']) !!}
-                        </div>
+                        <div class="row">
+                            <div class="form-group col-6">
+                                {!! html()->label('Nome', 'name') !!}
+                                {!! html()->text('name', $user->name ?? null)->class('form-control')->required() !!}
+                            </div>
 
-                        <div class="form-group w-75">
-                            <label for="email">Email</label>
-                            {!! Form::text('email', null, ['class' => 'form-control', 'required']) !!}
+                            <div class="form-group col-6">
+                                {!! html()->label('Email', 'email') !!}
+                                {!! html()->text('email', $user->email ?? null)->class('form-control')->required() !!}
+                            </div>
                         </div>
 
                         @if (isset($user->id))
 
-                        <div class="form-group w-75">
-                            <label>Senha ( Deixe em branco caso não deseje alterar )</label>
-                            <input type="password" name="password" class="form-control">
-                        </div>
+                        <div class="row">
+                            <div class="form-group col-6">
+                                {!! html()->label('Senha ( Deixe em branco caso não deseje alterar )', 'password') !!}
+                                {!! html()->password('password')->class('form-control') !!}
+                            </div>
 
-                        <div class="form-group w-75">
-                            <label>Confirmar a senha</label>
-                            <input type="password" name="password_confirmation" class="form-control">
+                            <div class="form-group col-6">
+                                {!! html()->label('Confirmar a senha', 'password_confirmation') !!}
+                                {!! html()->password('password_confirmation')->class('form-control') !!}
+                            </div>
                         </div>
 
                         @else
 
-                        <div class="form-group w-75">
-                            <label>Senha</label>
-                            <input type="password" name="password" class="form-control" required>
-                        </div>
+                        <div class="row">
+                            <div class="form-group col-6">
+                                {!! html()->label('Senha', 'password') !!}
+                                {!! html()->password('password')->class('form-control')->required() !!}
+                            </div>
 
-                        <div class="form-group w-75">
-                            <label>Confirmar a senha</label>
-                            <input type="password" name="password_confirmation" class="form-control" required>
+                            <div class="form-group col-6">
+                                {!! html()->label('Confirmar a senha', 'password_confirmation') !!}
+                                {!! html()->password('password_confirmation')->class('form-control')->required() !!}
+                            </div>
                         </div>
 
                         @endif
 
                         <button type="submit" class="btn btn-sm btn-primary m-r-5">Salvar</button>
-
                         <a href="{{ route('controle.usuario.index') }}" class="btn btn-sm btn-default">Cancelar</a>
-                    </fieldset>
-                    {!! Form::close() !!}
 
-                </div> <!-- panel-body -->
+                    </fieldset>
+                    {!! html()->form()->close() !!}
+                </div>
 
             </div>
 

@@ -42,7 +42,7 @@
 			<!-- begin login-content -->
 			<div class="login-content">
 
-				{{-- <x-jet-validation-errors class="mb-4" class="alert alert-danger" /> --}}
+				{{-- <x-validation-errors class="mb-4" class="alert alert-danger" /> --}}
 
 				<form action="{{ route('controle.login') }}" method="POST" class="margin-bottom-0">
                     @csrf

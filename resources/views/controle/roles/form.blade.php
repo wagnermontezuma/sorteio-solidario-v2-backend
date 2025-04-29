@@ -5,11 +5,11 @@
     <h1 class="page-header">Grupo de Usuários</h1>
 
     <div class="row">
-        <div style="width: 100vw">
+        <div class="col-6">
 
             <div class="panel panel-inverse">
                 <div class="panel-heading">
-                    <h4 class="panel-title">{{isset($role) ? 'Atualização de Grupo de Usuários' : 'Cadastro de Grupo de Usuários'}}</h4>
+                    <h4 class="panel-title">{{ isset($role) ? 'Atualização de Grupo de Usuários' : 'Cadastro de Grupo de Usuários' }}</h4>
                     <div class="panel-heading-btn">
                         <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default"
                             data-click="panel-expand"><i class="fa fa-expand"></i></a>
@@ -23,48 +23,102 @@
                 </div>
 
                 <div class="panel-body">
-                    {{ $msg ?? '' }}
                     @if (isset($role))
-                        {!! Form::model($role, ['method' => 'post', 'route' => ['controle.roles.update', $role->id]]) !!}
+                        {!! html()->form('POST', route('controle.roles.update', $role->id))->open() !!}
                     @else
-                        {!! Form::model(null, ['route' => 'controle.roles.store']) !!}
+                        {!! html()->form('POST', route('controle.roles.store'))->open() !!}
                     @endif
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
                                 <strong>Nome:</strong>
-                                {!! Form::text('name', null, ['placeholder' => 'Nome', 'class' => 'form-control']) !!}
+                                {!! html()->text('name', $role->name ?? null)->class('form-control')->placeholder('Nome') !!}
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
                                 <strong>Permissões:</strong>
                                 <br />
-                                @if (isset($role))
-                                    @foreach ($permission as $value)
-                                        <label>{{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, ['class' => 'name']) }}
-                                            {{ $value->name }}</label>
-                                        <br />
+
+                                <div id="accordion">
+                                    @foreach ($catPermissions as $catPermission)
+                                        <div class="card mb-3">
+                                            <div class="card-header bg-light d-flex justify-content-between align-items-center" id="heading{{ $catPermission->id }}" style="cursor: pointer;" data-toggle="collapse" data-target="#collapse{{ $catPermission->id }}" aria-expanded="false" aria-controls="collapse{{ $catPermission->id }}">
+                                                <div>
+                                                    <span>{{ $catPermission->name }}</span>
+                                                </div>
+                                                <div>
+                                                    <input type="checkbox" class="select-all-category ml-2" data-category="{{ $catPermission->id }}" id="select-all-category-{{ $catPermission->id }}">
+                                                    <label for="select-all-category-{{ $catPermission->id }}" class="ml-1 mr-3 label-todos">Todos</label>
+                                                    <i class="fa fa-chevron-down"></i>
+                                                </div>
+                                            </div>
+
+                                            <div id="collapse{{ $catPermission->id }}" class="collapse" aria-labelledby="heading{{ $catPermission->id }}" data-parent="#accordion">
+                                                <div class="card-body">
+                                                    @foreach ($catPermission->permissions as $permission)
+                                                        <div class="form-check">
+                                                            {!! html()->checkbox('permission[]', isset($role) && in_array($permission->id, $rolePermissions), $permission->id)->class('form-check-input category-permission-' . $catPermission->id)->id("permission-{$permission->id}") !!}
+                                                            {!! html()->label($permission->name, "permission-{$permission->id}")->class('form-check-label') !!}
+                                                        </div>
+
+                                                        @if (!$loop->last)
+                                                            <hr>
+                                                        @endif
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>
                                     @endforeach
-                                @else
-                                    @foreach ($permission as $value)
-                                        <label>{{ Form::checkbox('permission[]', $value->id, false, ['class' => 'name']) }}
-                                            {{ $value->name }}</label>
-                                        <br />
-                                    @endforeach
-                                @endif
+                                </div>
+
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12">
-                            <button type="submit" class="btn btn-sm btn-primary m-r-5">Salvar</button>
-                            <a href="{{ route('controle.roles.index') }}" class="btn btn-sm btn-default">Cancelar</a>
+                            {!! html()->button('Salvar')->type('submit')->class('btn btn-sm btn-primary m-r-5') !!}
+                            {!! html()->a(route('controle.roles.index'), 'Cancelar')->class('btn btn-sm btn-default') !!}
                         </div>
                     </div>
-                    {!! Form::close() !!}
-                </div> <!-- panel-body -->
+                    {!! html()->form()->close() !!}
+                </div>
 
             </div>
 
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Adicionar evento para "Marcar todos" nas categorias
+            document.querySelectorAll('.select-all-category').forEach(function (checkbox) {
+                checkbox.addEventListener('click', function (event) {
+                    // Previne que o clique no checkbox ative o evento do collapse
+                    event.stopPropagation();
+                });
+
+                checkbox.addEventListener('change', function () {
+                    const categoryId = this.getAttribute('data-category');
+                    const permissions = document.querySelectorAll('.category-permission-' + categoryId);
+
+                    permissions.forEach(function (permission) {
+                        permission.checked = checkbox.checked;
+                    });
+                });
+            });
+
+            // Prevenir que o clique nos checkboxes individuais ative o evento do collapse
+            document.querySelectorAll('.form-check-input').forEach(function (checkbox) {
+                checkbox.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                });
+            });
+
+            // Prevenir que o clique no card ative o evento do collapse
+            document.querySelectorAll('.label-todos').forEach(function (card) {
+                card.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                });
+            });
+        });
+    </script>
 @endsection

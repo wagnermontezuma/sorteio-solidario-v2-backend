@@ -1,21 +1,16 @@
 @extends('layouts.default')
 
 @section('content')
-    <!-- begin breadcrumb -->
-    <ol class="breadcrumb pull-right">
-    </ol>
-    <!-- end breadcrumb -->
-    <!-- begin page-header -->
+
+    <ol class="breadcrumb pull-right"></ol>
+
     <h1 class="page-header">
         Usuário
     </h1>
-    <!-- end page-header -->
 
     <div class="row">
         <div class="col-lg-6">
-            <!-- begin panel -->
             <div class="panel panel-inverse" data-sortable-id="form-stuff-9">
-                <!-- begin panel-heading -->
                 <div class="panel-heading">
                     <h4 class="panel-title">Usuário</h4>
                     <div class="panel-heading-btn">
@@ -29,46 +24,111 @@
                             data-click="panel-remove"><i class="fa fa-times"></i></a>
                     </div>
                 </div>
-                <!-- end panel-heading -->
-                
-                <!-- begin panel-body -->
+
                 <div class="panel-body">
-                    {!! Form::model(isset($user) ? $user : null,['route' => (isset($user->id) ? ['controle.profile.update', $user->id] : 'controle.profile.store'),'files' => true ]) !!}
+                    {!! html()->form('POST', isset($user->id) ? route('controle.profile.update', $user->id) : route('controle.profile.store'))->attribute('enctype', 'multipart/form-data')->open() !!}
                         <fieldset>
-                            {{--  <legend class="m-b-15">Legend</legend>  --}}
                             <div class="form-group">
-                                <label>Foto</label>
+                                {!! html()->label('Foto', 'imagem') !!}
                                 @if(!empty($user->imagem))
                                 <div>
                                     <img src="{{ route('imagem.render', 'user/p/' . $user->imagem) }}" alt="" class="img-fluid">
                                 </div>
                                 @endif
-                                {!! Form::file('imagem', ['class' => 'form-control']) !!}
+                                {!! html()->file('imagem')->class('form-control') !!}
                             </div>
                             <div class="form-group">
-                                <label>Nome</label>
-                                {!! Form::text('name', null, ['class' => 'form-control']) !!}
+                                {!! html()->label('Nome', 'name') !!}
+                                {!! html()->text('name', $user->name ?? null)->class('form-control') !!}
                             </div>
                             <div class="form-group">
-                                <label>E-mail</label>
-                                {!! Form::email('email', null, ['class' => 'form-control']) !!}
+                                {!! html()->label('E-mail', 'email') !!}
+                                {!! html()->email('email', $user->email ?? null)->class('form-control') !!}
                             </div>
                             <hr>
                             <div class="form-group">
-                                <label>Alterar Senha</label>
-                                {!! Form::password('password', ['class' => 'form-control', 'placeholder' => 'Nova senha']) !!}
+                                {!! html()->label('Alterar Senha', 'password') !!}
+                                {!! html()->password('password')->class('form-control')->placeholder('Nova senha') !!}
                             </div>
                             <div class="form-group">
-                                <label>Informe a senha atual</label>
-                                {!! Form::password('actual_password', ['class' => 'form-control', 'placeholder' => 'Senha atual']) !!}
+                                {!! html()->label('Informe a senha atual', 'actual_password') !!}
+                                {!! html()->password('actual_password')->class('form-control')->placeholder('Senha atual') !!}
                             </div>
-                            <button type="submit" class="btn btn-sm btn-primary m-r-5">Salvar</button>
+                            {!! html()->button('Salvar')->type('submit')->class('btn btn-sm btn-primary m-r-5') !!}
                         </fieldset>
-                    {!! Form::close() !!}
+                    {!! html()->form()->close() !!}
                 </div>
-                <!-- end panel-body -->
             </div>
-            <!-- end panel -->
+        </div>
+
+        <div class="col-lg-6">
+            <div class="panel panel-inverse" data-sortable-id="form-stuff-9">
+                <div class="panel-heading">
+                    <h4 class="panel-title">Autenticação de Dois Fatores</h4>
+                    <div class="panel-heading-btn">
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default"
+                            data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success"
+                            data-click="panel-reload"><i class="fa fa-redo"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning"
+                            data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger"
+                            data-click="panel-remove"><i class="fa fa-times"></i></a>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+
+                    <form method="POST" action="{{ route('two-factor.enable') }}">
+                        @csrf
+
+                        <div class="d-flex flex-column justify-content-center align-items-center">
+                            @if (auth()->user()->two_factor_secret)
+                                @method('DELETE')
+
+                                <div class="alert alert-success" role="alert">
+                                    A autenticação de duas etapas agora está habilitada.
+                                </div>
+
+                                <b class="mb-3">Escanei o QR CODE a seguir usando aplicativo Google Authenticator no seu telefone.</b>
+
+                                <div>
+                                    {!! auth()->user()->twoFactorQrCodeSvg() !!}
+                                </div>
+
+                                <br>
+
+                                <b>Armazene esses códigos de recuperação em um local seguro.</b>
+                                <b class="mb-3">Eles podem ser utilizados para recuperar o acesso à sua conta caso você perca o seu telefone.</b>
+
+                                @foreach (json_decode(decrypt(auth()->user()->two_factor_recovery_codes), true) as $code)
+                                    <p>{{ $code }}</p>
+                                @endforeach
+
+                                <br>
+
+                                <button type="submit" class="btn btn-danger">
+                                    Desabilitar
+                                </button>
+                            @else
+                                <div class="alert alert-warning" role="alert">
+                                    A autenticação de dois fatores está desativada
+                                </div>
+
+                                <b class="text-center mb-3">
+                                    Quando autenticação de duas etapas for habilitado, você será solicitado a fornecer um
+                                    token seguro e aleatório durante a autenticação. Este código é gerado pelo aplicativo
+                                    Google Authenticator no seu telefone.
+                                </b>
+
+                                <button type="submit" class="btn btn-success">
+                                    Habilitar
+                                </button>
+                            @endif
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
