@@ -60,6 +60,76 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-lg-6">
+            <div class="panel panel-inverse" data-sortable-id="form-stuff-9">
+                <div class="panel-heading">
+                    <h4 class="panel-title">Autenticação de Dois Fatores</h4>
+                    <div class="panel-heading-btn">
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default"
+                            data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success"
+                            data-click="panel-reload"><i class="fa fa-redo"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning"
+                            data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger"
+                            data-click="panel-remove"><i class="fa fa-times"></i></a>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+
+                    <form method="POST" action="{{ route('two-factor.enable') }}">
+                        @csrf
+
+                        <div class="d-flex flex-column justify-content-center align-items-center">
+                            @if (auth()->user()->two_factor_secret)
+                                @method('DELETE')
+
+                                <div class="alert alert-success" role="alert">
+                                    A autenticação de duas etapas agora está habilitada.
+                                </div>
+
+                                <b class="mb-3">Escanei o QR CODE a seguir usando aplicativo Google Authenticator no seu telefone.</b>
+
+                                <div>
+                                    {!! auth()->user()->twoFactorQrCodeSvg() !!}
+                                </div>
+
+                                <br>
+
+                                <b>Armazene esses códigos de recuperação em um local seguro.</b>
+                                <b class="mb-3">Eles podem ser utilizados para recuperar o acesso à sua conta caso você perca o seu telefone.</b>
+
+                                @foreach (json_decode(decrypt(auth()->user()->two_factor_recovery_codes), true) as $code)
+                                    <p>{{ $code }}</p>
+                                @endforeach
+
+                                <br>
+
+                                <button type="submit" class="btn btn-danger">
+                                    Desabilitar
+                                </button>
+                            @else
+                                <div class="alert alert-warning" role="alert">
+                                    A autenticação de dois fatores está desativada
+                                </div>
+
+                                <b class="text-center mb-3">
+                                    Quando autenticação de duas etapas for habilitado, você será solicitado a fornecer um
+                                    token seguro e aleatório durante a autenticação. Este código é gerado pelo aplicativo
+                                    Google Authenticator no seu telefone.
+                                </b>
+
+                                <button type="submit" class="btn btn-success">
+                                    Habilitar
+                                </button>
+                            @endif
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
 @stop
