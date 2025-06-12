@@ -44,7 +44,7 @@
                                             Editar
                                         </a>
 
-                                        <a href="{{ route('controle.roles.delete', $role->id) }}"
+                                        <a href="#" data-url= "{{ route('controle.roles.delete', $role->id) }}"
                                             class="btn btn-danger btn-sm atencao">
                                             <i class="fa fa-trash-alt"></i>
                                             Excluir
