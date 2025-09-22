@@ -13,6 +13,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Descomente as linhas abaixo para rodar os seeders de categorias e permissões
+        // $this->call([
+        //     CatPermissionSeeder::class,
+        //     PermissionSeeder::class,
+        // ]);
+
         // User::factory(10)->create();
 
         // User::factory()->create([

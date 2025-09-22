@@ -17,5 +17,10 @@ class CatPermissionSeeder extends Seeder
         CatPermission::updateOrCreate(
             ['name' => 'Config'],
         );
+
+        // Exemplo de Categoria de permissão
+        // CatPermission::updateOrCreate(
+        //     ['name' => 'Categoria'],
+        // );
     }
 }
