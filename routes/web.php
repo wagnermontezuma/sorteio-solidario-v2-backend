@@ -5,13 +5,13 @@ use App\Http\Controllers\PagSeguroController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return redirect()->route('controle.dashboard');
+    return redirect()->route('admin.dashboard');
 })->name('home');
 
 Route::group([
-    'prefix' => 'controle',
+    'prefix' => 'admin',
     'middleware' => ['web', 'auth:sanctum', 'verified'],
-    'as' => 'controle.',
+    'as' => 'admin.',
 ], function () {
     Route::get('dashboard', function () {
         return view('dashboard');
@@ -31,5 +31,13 @@ Route::group([
     // });
 });
 
-Route::post('/pagseguro/callback', [PagSeguroController::class, 'callback'])->name('pagseguro.callback');
+Route::group([
+    'prefix' => 'controle',
+    'middleware' => ['web', 'auth:sanctum', 'verified'],
+], function () {
+    Route::get('/{any?}', function () {
+        return redirect('/admin');
+    })->where('any', '.*');
+});
+
 Route::get('/pagseguro/sucesso', [PagSeguroController::class, 'success'])->name('pagseguro.success');

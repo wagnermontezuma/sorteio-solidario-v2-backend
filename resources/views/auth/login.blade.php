@@ -44,7 +44,7 @@
 
 				{{-- <x-validation-errors class="mb-4" class="alert alert-danger" /> --}}
 
-				<form action="{{ route('controle.login') }}" method="POST" class="margin-bottom-0">
+                                <form action="{{ route('login') }}" method="POST" class="margin-bottom-0">
                     @csrf
 					<div class="form-group m-b-15">
 						<input type="text" name="email" class="form-control form-control-lg" value="" placeholder="Email" data-parsley-required="true" />

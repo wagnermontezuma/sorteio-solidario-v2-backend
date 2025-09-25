@@ -21,7 +21,7 @@
                 <div class="panel-body">
                     <div class="btn-group mr-5">
                         <div class="d-flex align-items-center justify-content-center mr-10 mb-3">
-                            <a href="{{ route('controle.roles.create') }}" class="btn btn-success btn-sm">
+                            <a href="{{ route('admin.roles.create') }}" class="btn btn-success btn-sm">
                                 Cadastrar
                             </a>
                         </div>
@@ -38,13 +38,13 @@
                                 <td>{{ $role->name }}</td>
                                 @if ($role->name != 'Administrador')
                                     <td>
-                                        <a href="{{ route('controle.roles.edit', $role->id) }}"
+                                        <a href="{{ route('admin.roles.edit', $role->id) }}"
                                             class="btn btn-primary btn-sm">
                                             <i class="fa fa-edit"></i>
                                             Editar
                                         </a>
 
-                                        <a href="#" data-url= "{{ route('controle.roles.delete', $role->id) }}"
+                                        <a href="#" data-url= "{{ route('admin.roles.delete', $role->id) }}"
                                             class="btn btn-danger btn-sm atencao">
                                             <i class="fa fa-trash-alt"></i>
                                             Excluir
