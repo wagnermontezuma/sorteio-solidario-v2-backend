@@ -1,23 +1,21 @@
 ﻿<?php
 
-use App\Http\Controllers\Admin\RaffleAdminController;
+use App\Http\Controllers\Admin\SorteioAdminController;
 use App\Http\Controllers\PagSeguroController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return redirect()->route('controle.dashboard');
+    return redirect()->route('admin.dashboard');
 })->name('home');
 
-Route::group([
-    'prefix' => 'controle',
-    'middleware' => ['web', 'auth:sanctum', 'verified'],
-    'as' => 'controle.',
-], function () {
-    Route::get('dashboard', function () {
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 
-    Route::resource('sorteios', RaffleAdminController::class)->except(['show']);
+    Route::get('/sorteios', [SorteioAdminController::class, 'index'])->name('sorteios.index');
+    Route::get('/sorteios/criar', [SorteioAdminController::class, 'create'])->name('sorteios.create');
+    Route::post('/sorteios', [SorteioAdminController::class, 'store'])->name('sorteios.store');
 
     /*--------------------------------------------------------------------------
     | Rotas do controle (Exemplo)
@@ -31,5 +29,13 @@ Route::group([
     // });
 });
 
-Route::post('/pagseguro/callback', [PagSeguroController::class, 'callback'])->name('pagseguro.callback');
+Route::group([
+    'prefix' => 'controle',
+    'middleware' => ['web', 'auth:sanctum', 'verified'],
+], function () {
+    Route::get('/{any?}', function () {
+        return redirect('/admin');
+    })->where('any', '.*');
+});
+
 Route::get('/pagseguro/sucesso', [PagSeguroController::class, 'success'])->name('pagseguro.success');

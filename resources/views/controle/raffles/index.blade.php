@@ -3,7 +3,7 @@
 
 @section('content')
     <ol class="breadcrumb float-xl-right">
-        <li class="breadcrumb-item"><a href="{{ route('controle.dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
         <li class="breadcrumb-item active">Sorteios</li>
     </ol>
 
@@ -24,9 +24,9 @@
                 <div class="panel-body">
                     <div class="d-flex flex-wrap align-items-center justify-content-between mb-3">
                         <div class="mb-2">
-                            <a href="{{ route('controle.raffles.create') }}" class="btn btn-primary"><i class="fa fa-plus mr-1"></i> Novo sorteio</a>
+                            <a href="{{ route('admin.raffles.create') }}" class="btn btn-primary"><i class="fa fa-plus mr-1"></i> Novo sorteio</a>
                         </div>
-                        <form method="GET" action="{{ route('controle.raffles.index') }}" class="form-inline">
+                        <form method="GET" action="{{ route('admin.raffles.index') }}" class="form-inline">
                             <div class="input-group">
                                 <input type="text" name="search" value="{{ $filters['search'] ?? '' }}" class="form-control" placeholder="Buscar por nome ou slug">
                                 <div class="input-group-append">
@@ -51,6 +51,9 @@
                                     <th class="text-nowrap">Vendidos</th>
                                     <th class="text-nowrap">Status</th>
                                     <th class="text-nowrap">Data do sorteio</th>
+                                    <th class="text-nowrap">Concurso Loteria</th>
+                                    <th class="text-nowrap">Resultado Federal</th>
+                                    <th class="text-nowrap">Bilhete vencedor</th>
                                     <th class="text-center" width="120">Ações</th>
                                 </tr>
                             </thead>
@@ -86,9 +89,12 @@
                                             </span>
                                         </td>
                                         <td>{{ $raffle->draw_date ? $raffle->draw_date->format('d/m/Y H:i') : '—' }}</td>
+                                        <td>{{ $raffle->federal_lottery_contest ?? '—' }}</td>
+                                        <td>{{ $raffle->federal_lottery_result ?? '—' }}</td>
+                                        <td>{{ $raffle->winning_ticket_number ?? '—' }}</td>
                                         <td class="text-center">
-                                            <a href="{{ route('controle.raffles.edit', $raffle) }}" class="btn btn-sm btn-primary mr-1"><i class="fa fa-edit"></i></a>
-                                            <form action="{{ route('controle.raffles.destroy', $raffle) }}" method="POST" class="d-inline" onsubmit="return confirm('Confirma excluir este sorteio?');">
+                                            <a href="{{ route('admin.raffles.edit', $raffle) }}" class="btn btn-sm btn-primary mr-1"><i class="fa fa-edit"></i></a>
+                                            <form action="{{ route('admin.raffles.destroy', $raffle) }}" method="POST" class="d-inline" onsubmit="return confirm('Confirma excluir este sorteio?');">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
@@ -97,7 +103,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="8" class="text-center text-muted">Nenhum sorteio cadastrado até o momento.</td>
+                                        <td colspan="11" class="text-center text-muted">Nenhum sorteio cadastrado até o momento.</td>
                                     </tr>
                                 @endforelse
                             </tbody>

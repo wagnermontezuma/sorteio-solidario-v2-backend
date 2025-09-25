@@ -54,29 +54,35 @@ $sidebarClass = !empty($sidebarTransparent) ? 'sidebar-transparent' : '';
         <ul class="nav">
             <li class="nav-header">Navegação</li>
 
-			<li class="has-sub {{ activeMenu('dashboard') }}">
-				<a href="{{ route('dashboard') }}">
-					<i class="fa fa-tachometer-alt"></i>
-					<span>Dashboard</span>
-				</a>
-			</li>
+                        <li class="has-sub {{ activeMenu('dashboard') }}">
+                                <a href="{{ route('dashboard') }}">
+                                        <i class="fa fa-tachometer-alt"></i>
+                                        <span>Dashboard</span>
+                                </a>
+                        </li>
+                        <li class="has-sub {{ activeMenu('admin.sorteios') }}">
+                                <a href="{{ route('admin.sorteios.index') }}">
+                                        <i class="fa fa-ticket-alt"></i>
+                                        <span>Gerenciar Sorteios</span>
+                                </a>
+                        </li>
 
             @can('Visualizar Usuário')
-                <li class="has-sub {{ activeMenu(['controle.usuario', 'controle.roles']) }}">
+                <li class="has-sub {{ activeMenu(['admin.usuario', 'admin.roles']) }}">
                     <a href="javascript:;">
                         <b class="caret"></b>
                         <i class="fa fa-lock"></i>
                         <span>Controle de Acesso</span>
                     </a>
                     <ul class="sub-menu">
-                        <li class="has-sub {{ activeMenu('controle.usuario') }}">
-                            <a href="{{ route('controle.usuario.index') }}">
+                        <li class="has-sub {{ activeMenu('admin.usuario') }}">
+                            <a href="{{ route('admin.usuario.index') }}">
                                 <i class="fas fa-user"></i>
                                 <span>Usuários</span>
                             </a>
                         </li>
-                        <li class="has-sub {{ activeMenu('controle.roles') }}">
-                            <a href="{{ route('controle.roles.index') }}">
+                        <li class="has-sub {{ activeMenu('admin.roles') }}">
+                            <a href="{{ route('admin.roles.index') }}">
                                 <i class="fas fa-user-friends"></i>
                                 <span>Grupo de usuários</span>
                             </a>
@@ -86,8 +92,8 @@ $sidebarClass = !empty($sidebarTransparent) ? 'sidebar-transparent' : '';
             @endcan
 
             @can('Alterar Config')
-                <li class="has-sub {{ activeMenu('controle.config') }}">
-                    <a href="{{ route('controle.config.edit') }}">
+                <li class="has-sub {{ activeMenu('admin.config') }}">
+                    <a href="{{ route('admin.config.edit') }}">
                         <i class="fas fa-cog"></i>
                         <span>Configurações</span>
                     </a>

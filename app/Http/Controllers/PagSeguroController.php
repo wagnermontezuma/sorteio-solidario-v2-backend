@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PurchaseConfirmationMail;
 use App\Models\Purchase;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use PagSeguro; // Assuming the package is installed
 
 class PagSeguroController extends Controller
@@ -22,16 +24,29 @@ class PagSeguroController extends Controller
                 $purchase->status = $transaction->getStatus()->getName(); // e.g., 'PAID', 'CANCELLED'
                 $purchase->save();
 
-                if ($transaction->getStatus()->getName() === 'PAID') {
+                if ($transaction->getStatus()->getName() === 'PAID' && $purchase->tickets()->count() === 0) {
                     $raffle = $purchase->raffle;
+                    $ticketNumbers = [];
 
                     for ($i = 0; $i < $purchase->quantity; $i++) {
-                        Ticket::create([
+                        $ticket = Ticket::create([
                             'purchase_id' => $purchase->id,
                             'raffle_id' => $raffle->id,
                             'number' => $this->generateUniqueTicketNumber($raffle->id),
                             'status' => 'paid',
                         ]);
+
+                        $ticketNumbers[] = $ticket->number;
+                    }
+
+                    if (! empty($ticketNumbers)) {
+                        $purchase->loadMissing('customer', 'raffle');
+
+                        if ($purchase->customer && $purchase->customer->email) {
+                            Mail::to($purchase->customer->email)->send(
+                                new PurchaseConfirmationMail($purchase, $ticketNumbers)
+                            );
+                        }
                     }
                 }
             }
