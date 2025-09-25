@@ -13,7 +13,8 @@
         "laravel/framework": "^12.10",
         "laravel/sanctum": "^4.1",
         "laravel/tinker": "^2.10",
-        "therobfonz/laravel-mandrill-driver": "^6.1"
+        "therobfonz/laravel-mandrill-driver": "^6.1",
+        "michaeldouglas/laravel-pagseguro": "dev-master"
     },
     "require-dev": {
         "fakerphp/faker": "^1.24",
