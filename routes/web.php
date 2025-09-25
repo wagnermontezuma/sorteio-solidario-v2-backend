@@ -8,10 +8,20 @@ Route::get('/', function () {
     return redirect()->route('admin.dashboard');
 })->name('home');
 
+// Alias para compatibilidade com views que usam route('dashboard')
+Route::get('/dashboard', function () {
+    return redirect()->route('admin.dashboard');
+})->name('dashboard');
+
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    // Perfil do usuário (edição)
+    Route::get('/profile', function () {
+        return view('controle.profile.show');
+    })->name('profile.edit');
 
     Route::get('/sorteios', [SorteioAdminController::class, 'index'])->name('sorteios.index');
     Route::get('/sorteios/criar', [SorteioAdminController::class, 'create'])->name('sorteios.create');
