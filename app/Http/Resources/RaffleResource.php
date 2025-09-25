@@ -21,6 +21,7 @@ class RaffleResource extends JsonResource
             'title' => $this->name,
             'description' => $this->description,
             'rules' => $this->rules,
+            'prize' => $this->prize,
             'prize_image' => $this->image_url,
             'prize_images' => $this->gallery_images ?? [],
             'ticket_price' => (float) $this->ticket_price,
