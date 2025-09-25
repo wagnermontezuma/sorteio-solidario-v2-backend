@@ -50,12 +50,13 @@ class RaffleAdminController extends Controller
 
         $data['slug'] = $this->ensureUniqueSlug($data['slug']);
         $data['gallery_images'] = $this->splitGalleryImages($request->input('gallery_images_raw'));
-        $data['draw_date'] = $this->normalizeDrawDate($data['draw_date'] ?? null);
+        $data['draw_date'] = $this->normalizeDateTime($data['draw_date'] ?? null);
+        $data['result_published_at'] = $this->normalizeDateTime($data['result_published_at'] ?? null);
 
         Raffle::create($data);
 
         return redirect()
-            ->route('controle.raffles.index')
+            ->route('admin.raffles.index')
             ->with('status', 'Sorteio criado com sucesso.');
     }
 
@@ -77,12 +78,13 @@ class RaffleAdminController extends Controller
 
         $data['slug'] = $this->ensureUniqueSlug($data['slug'], $raffle->id);
         $data['gallery_images'] = $this->splitGalleryImages($request->input('gallery_images_raw'));
-        $data['draw_date'] = $this->normalizeDrawDate($data['draw_date'] ?? null);
+        $data['draw_date'] = $this->normalizeDateTime($data['draw_date'] ?? null);
+        $data['result_published_at'] = $this->normalizeDateTime($data['result_published_at'] ?? null);
 
         $raffle->update($data);
 
         return redirect()
-            ->route('controle.raffles.edit', $raffle)
+            ->route('admin.raffles.edit', $raffle)
             ->with('status', 'Sorteio atualizado com sucesso.');
     }
 
@@ -91,7 +93,7 @@ class RaffleAdminController extends Controller
         $raffle->delete();
 
         return redirect()
-            ->route('controle.raffles.index')
+            ->route('admin.raffles.index')
             ->with('status', 'Sorteio removido.');
     }
 
@@ -106,6 +108,10 @@ class RaffleAdminController extends Controller
             'ticket_price' => ['required', 'numeric', 'min:0'],
             'total_tickets' => ['required', 'integer', 'min:1'],
             'draw_date' => ['nullable', 'date'],
+            'federal_lottery_contest' => ['nullable', 'string', 'max:255'],
+            'federal_lottery_result' => ['nullable', 'string', 'max:255'],
+            'winning_ticket_number' => ['nullable', 'string', 'max:50'],
+            'result_published_at' => ['nullable', 'date'],
             'status' => ['required', 'in:active,completed,cancelled'],
         ]);
     }
@@ -118,7 +124,7 @@ class RaffleAdminController extends Controller
         }, preg_split('/\r\n|\r|\n/', $raw ?? ''))));
     }
 
-    private function normalizeDrawDate($value): ?string
+    private function normalizeDateTime($value): ?string
     {
         if (blank($value)) {
             return null;

@@ -24,9 +24,9 @@
 
                 <div class="panel-body">
                     @if (isset($role))
-                        {!! html()->form('POST', route('controle.roles.update', $role->id))->open() !!}
+                        {!! html()->form('POST', route('admin.roles.update', $role->id))->open() !!}
                     @else
-                        {!! html()->form('POST', route('controle.roles.store'))->open() !!}
+                        {!! html()->form('POST', route('admin.roles.store'))->open() !!}
                     @endif
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12">
@@ -84,7 +84,7 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             {!! html()->button('Salvar')->type('submit')->class('btn btn-sm btn-primary m-r-5') !!}
-                            {!! html()->a(route('controle.roles.index'), 'Cancelar')->class('btn btn-sm btn-default') !!}
+                            {!! html()->a(route('admin.roles.index'), 'Cancelar')->class('btn btn-sm btn-default') !!}
                         </div>
                     </div>
                     {!! html()->form()->close() !!}

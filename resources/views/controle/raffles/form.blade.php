@@ -3,8 +3,8 @@
 
 @section('content')
     <ol class="breadcrumb float-xl-right">
-        <li class="breadcrumb-item"><a href="{{ route('controle.dashboard') }}">Dashboard</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('controle.raffles.index') }}">Sorteios</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('admin.raffles.index') }}">Sorteios</a></li>
         <li class="breadcrumb-item active">{{ $mode === 'edit' ? 'Editar' : 'Novo' }}</li>
     </ol>
 
@@ -17,7 +17,7 @@
                     <h4 class="panel-title">{{ $raffle->exists ? $raffle->name : 'Informações básicas' }}</h4>
                 </div>
                 <div class="panel-body">
-                    <form method="POST" action="{{ $mode === 'edit' ? route('controle.raffles.update', $raffle) : route('controle.raffles.store') }}">
+                    <form method="POST" action="{{ $mode === 'edit' ? route('admin.raffles.update', $raffle) : route('admin.raffles.store') }}">
                         @csrf
                         @if ($mode === 'edit')
                             @method('PUT')
@@ -77,6 +77,29 @@
                                 @error('draw_date')<span class="invalid-feedback d-block">{{ $message }}</span>@enderror
                             </div>
                             <div class="form-group col-md-6">
+                                <label for="result_published_at">Resultado publicado em</label>
+                                <input type="datetime-local" id="result_published_at" name="result_published_at" value="{{ old('result_published_at', optional($raffle->result_published_at)->format('Y-m-d\TH:i')) }}" class="form-control @error('result_published_at') is-invalid @enderror">
+                                @error('result_published_at')<span class="invalid-feedback d-block">{{ $message }}</span>@enderror
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="federal_lottery_contest">Concurso da Loteria Federal</label>
+                                <input type="text" id="federal_lottery_contest" name="federal_lottery_contest" value="{{ old('federal_lottery_contest', $raffle->federal_lottery_contest) }}" class="form-control @error('federal_lottery_contest') is-invalid @enderror">
+                                @error('federal_lottery_contest')<span class="invalid-feedback d-block">{{ $message }}</span>@enderror
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="federal_lottery_result">Resultado da Loteria Federal</label>
+                                <input type="text" id="federal_lottery_result" name="federal_lottery_result" value="{{ old('federal_lottery_result', $raffle->federal_lottery_result) }}" class="form-control @error('federal_lottery_result') is-invalid @enderror">
+                                @error('federal_lottery_result')<span class="invalid-feedback d-block">{{ $message }}</span>@enderror
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="winning_ticket_number">Número vencedor</label>
+                                <input type="text" id="winning_ticket_number" name="winning_ticket_number" value="{{ old('winning_ticket_number', $raffle->winning_ticket_number) }}" class="form-control @error('winning_ticket_number') is-invalid @enderror">
+                                @error('winning_ticket_number')<span class="invalid-feedback d-block">{{ $message }}</span>@enderror
+                            </div>
+                            <div class="form-group col-md-6">
                                 <label for="status">Status *</label>
                                 <select id="status" name="status" class="form-control @error('status') is-invalid @enderror" required>
                                     @php($currentStatus = old('status', $raffle->status ?? 'active'))
@@ -89,7 +112,7 @@
                         </div>
 
                         <div class="d-flex justify-content-between mt-4">
-                            <a href="{{ route('controle.raffles.index') }}" class="btn btn-secondary">Voltar</a>
+                            <a href="{{ route('admin.raffles.index') }}" class="btn btn-secondary">Voltar</a>
                             <button type="submit" class="btn btn-success">{{ $mode === 'edit' ? 'Salvar alterações' : 'Cadastrar sorteio' }}</button>
                         </div>
                     </form>

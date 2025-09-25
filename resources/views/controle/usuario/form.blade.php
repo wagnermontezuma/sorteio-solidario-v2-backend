@@ -29,9 +29,9 @@
 
                 <div class="panel-body">
                     @if (isset($user->id))
-                        {!! html()->form('POST', route('controle.usuario.update', $user->id))->open() !!}
+                        {!! html()->form('POST', route('admin.usuario.update', $user->id))->open() !!}
                     @else
-                        {!! html()->form('POST', route('controle.usuario.store'))->open() !!}
+                        {!! html()->form('POST', route('admin.usuario.store'))->open() !!}
                     @endif
                     <fieldset>
 
@@ -85,7 +85,7 @@
                         @endif
 
                         <button type="submit" class="btn btn-sm btn-primary m-r-5">Salvar</button>
-                        <a href="{{ route('controle.usuario.index') }}" class="btn btn-sm btn-default">Cancelar</a>
+                        <a href="{{ route('admin.usuario.index') }}" class="btn btn-sm btn-default">Cancelar</a>
 
                     </fieldset>
                     {!! html()->form()->close() !!}
