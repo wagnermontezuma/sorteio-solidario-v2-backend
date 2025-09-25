@@ -24,7 +24,7 @@
 				<div class="panel-body">
 					<div class="btn-group mr-5">
                         <div class="d-flex align-items-center justify-content-center mr-10 mb-3">
-                            <a href="{{ route('controle.usuario.create') }}" class="btn btn-success btn-sm">
+                            <a href="{{ route('admin.usuario.create') }}" class="btn btn-success btn-sm">
                                 Cadastrar
                             </a>
                         </div>
@@ -66,14 +66,14 @@
                                 <td>{{ $usuario->email }}</td>
                                 <td>{{ $usuario->created_at->format('d/m/Y H:i:s') }}</td>
                                 <td>
-                                    <a href="{{ route('controle.usuario.edit', $usuario->id) }}"
+                                    <a href="{{ route('admin.usuario.edit', $usuario->id) }}"
                                         class="btn btn-primary btn-sm">
                                         <i class="fa fa-edit"></i>
                                         Editar
                                     </a>
 
-                                    <a href="{{ route('controle.usuario.delete', $usuario->id) }}"
-                                        data-url="{{ route('controle.usuario.delete', $usuario->id) }}"
+                                    <a href="{{ route('admin.usuario.delete', $usuario->id) }}"
+                                        data-url="{{ route('admin.usuario.delete', $usuario->id) }}"
                                         class="btn btn-danger btn-sm atencao">
                                         <i class="fa fa-trash-alt"></i>
                                         Excluir

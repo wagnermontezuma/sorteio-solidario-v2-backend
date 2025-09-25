@@ -8,6 +8,7 @@ use App\Models\Purchase;
 use App\Models\Raffle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use PagSeguro; // Assuming the package is installed and the alias is available
 
 class RaffleController extends Controller
@@ -84,6 +85,16 @@ class RaffleController extends Controller
             'status' => 'pending',
         ]);
 
+        $participantCookie = json_encode([
+            'name' => $customer->name,
+            'email' => $customer->email,
+            'phone' => $customer->phone,
+        ], JSON_UNESCAPED_UNICODE);
+
+        if ($participantCookie === false) {
+            $participantCookie = '';
+        }
+
         $pagseguroData = [
             'items' => [
                 [
@@ -99,7 +110,7 @@ class RaffleController extends Controller
             ],
             'currency' => 'BRL',
             'redirectURL' => route('pagseguro.success'),
-            'notificationURL' => route('pagseguro.callback'),
+            'notificationURL' => route('pagseguro.webhook'),
             'reference' => (string) $purchase->id,
         ];
 
@@ -108,13 +119,25 @@ class RaffleController extends Controller
             $credentials = PagSeguro::credentials()->get();
             $information = $checkout->send($credentials);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Checkout criado com sucesso.',
-                'purchase_id' => $purchase->id,
-                'payment_url' => $information->getLink(),
-                'ticket_numbers' => [],
-            ], 201);
+            return response()
+                ->json([
+                    'success' => true,
+                    'message' => 'Checkout criado com sucesso.',
+                    'purchase_id' => $purchase->id,
+                    'payment_url' => $information->getLink(),
+                    'ticket_numbers' => [],
+                ], 201)
+                ->cookie(
+                    'participant_data',
+                    $participantCookie,
+                    60 * 24 * 30,
+                    '/',
+                    config('session.domain'),
+                    config('session.secure', false),
+                    false,
+                    false,
+                    Str::lower(config('session.same_site', 'lax'))
+                );
         } catch (\Exception $e) {
             $purchase->update(['status' => 'failed']);
 

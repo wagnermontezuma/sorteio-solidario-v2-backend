@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="panel-body">
-                    {!! html()->form('POST', isset($user->id) ? route('controle.profile.update', $user->id) : route('controle.profile.store'))->attribute('enctype', 'multipart/form-data')->open() !!}
+                    {!! html()->form('POST', isset($user->id) ? route('admin.profile.update', $user->id) : route('admin.profile.store'))->attribute('enctype', 'multipart/form-data')->open() !!}
                         <fieldset>
                             <div class="form-group">
                                 {!! html()->label('Foto', 'imagem') !!}

@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    {!! html()->form('POST', route('controle.config.update'))->attribute('enctype', 'multipart/form-data')->open() !!}
+                    {!! html()->form('POST', route('admin.config.update'))->attribute('enctype', 'multipart/form-data')->open() !!}
                         <fieldset>
                             <div class="form-group">
                                 {!! html()->label('Nome do projeto', 'nome') !!}

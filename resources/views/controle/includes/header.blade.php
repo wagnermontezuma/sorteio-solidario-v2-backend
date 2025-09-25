@@ -84,7 +84,7 @@
 				<span class="d-none d-md-inline">{{ Auth::user()->name }}</span> <b class="caret"></b>
 			</a>
 			<div class="dropdown-menu dropdown-menu-right">
-				<a href="{{ route('controle.profile.edit') }}" class="dropdown-item">Perfil</a>
+				<a href="{{ route('admin.profile.edit') }}" class="dropdown-item">Perfil</a>
 
 				<form method="POST" action="{{ route('logout') }}">
                     @csrf

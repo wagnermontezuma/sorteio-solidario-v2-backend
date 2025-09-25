@@ -12,6 +12,7 @@ class Raffle extends Model
     protected $fillable = [
         'name',
         'slug',
+        'prize',
         'description',
         'rules',
         'image_url',
@@ -19,12 +20,17 @@ class Raffle extends Model
         'ticket_price',
         'total_tickets',
         'draw_date',
+        'federal_lottery_contest',
+        'federal_lottery_result',
+        'winning_ticket_number',
+        'result_published_at',
         'status',
     ];
 
     protected $casts = [
         'gallery_images' => 'array',
         'draw_date' => 'datetime',
+        'result_published_at' => 'datetime',
         'ticket_price' => 'decimal:2',
         'total_tickets' => 'integer',
     ];
