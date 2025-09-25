@@ -54,12 +54,18 @@ $sidebarClass = !empty($sidebarTransparent) ? 'sidebar-transparent' : '';
         <ul class="nav">
             <li class="nav-header">Navegação</li>
 
-			<li class="has-sub {{ activeMenu('dashboard') }}">
-				<a href="{{ route('dashboard') }}">
-					<i class="fa fa-tachometer-alt"></i>
-					<span>Dashboard</span>
-				</a>
-			</li>
+                        <li class="has-sub {{ activeMenu('dashboard') }}">
+                                <a href="{{ route('dashboard') }}">
+                                        <i class="fa fa-tachometer-alt"></i>
+                                        <span>Dashboard</span>
+                                </a>
+                        </li>
+                        <li class="has-sub {{ activeMenu('admin.sorteios') }}">
+                                <a href="{{ route('admin.sorteios.index') }}">
+                                        <i class="fa fa-ticket-alt"></i>
+                                        <span>Gerenciar Sorteios</span>
+                                </a>
+                        </li>
 
             @can('Visualizar Usuário')
                 <li class="has-sub {{ activeMenu(['admin.usuario', 'admin.roles']) }}">

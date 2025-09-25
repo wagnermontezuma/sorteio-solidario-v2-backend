@@ -1,6 +1,6 @@
 ﻿<?php
 
-use App\Http\Controllers\Admin\RaffleAdminController;
+use App\Http\Controllers\Admin\SorteioAdminController;
 use App\Http\Controllers\PagSeguroController;
 use Illuminate\Support\Facades\Route;
 
@@ -8,16 +8,14 @@ Route::get('/', function () {
     return redirect()->route('admin.dashboard');
 })->name('home');
 
-Route::group([
-    'prefix' => 'admin',
-    'middleware' => ['web', 'auth:sanctum', 'verified'],
-    'as' => 'admin.',
-], function () {
-    Route::get('dashboard', function () {
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 
-    Route::resource('sorteios', RaffleAdminController::class)->except(['show']);
+    Route::get('/sorteios', [SorteioAdminController::class, 'index'])->name('sorteios.index');
+    Route::get('/sorteios/criar', [SorteioAdminController::class, 'create'])->name('sorteios.create');
+    Route::post('/sorteios', [SorteioAdminController::class, 'store'])->name('sorteios.store');
 
     /*--------------------------------------------------------------------------
     | Rotas do controle (Exemplo)
